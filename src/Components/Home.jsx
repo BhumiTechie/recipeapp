@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 
 const Home = () => {
-	
+	const [navVisible, setNavVisible] = useState(false);
   const [imageVisible, setImageVisible] = useState(false);
   const [titleVisible, setTitleVisible] = useState(false);
   const [textVisible, setTextVisible] = useState(false);

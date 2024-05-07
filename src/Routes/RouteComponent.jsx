@@ -9,7 +9,7 @@ const RouteComponent = () => {
     <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/recipe" element={<Recipe />} />
-
+        
       </Routes>
   </div>
   )
