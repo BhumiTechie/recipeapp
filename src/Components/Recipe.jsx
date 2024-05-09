@@ -1,19 +1,37 @@
-import React from 'react'
-import RecipesIn from './RecipesIn'
-import Create from './Create'
+import React, { useContext } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 const Recipe = () => {
-  return (
-	<div>
-	<div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="max-w-4xl w-full bg-white rounded-lg shadow-md overflow-hidden">
-        <h1 className="text-3xl font-semibold text-center text-gray-800 py-6 bg-gradient-to-r from-yellow-300 to-red-400">Here Recipes</h1>
-		<RecipesIn/>
-	
-	</div>
-	</div>
-    </div>	
-  )
-}
+    const [recipes, setrecipes] = useContext(Recipecontext);
+    const { pathname } = useLocation();
+    console.log(recipes);
+    return (
+        <div className=" ">
+            <h1 className="text-center text-2xl font-semibold">OUR RECIPES</h1>
+            <p className="text-center text-zinc-400">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas,
+                aperiam?
+            </p>
+            <div className="recipe-cards mt-[5%]  flex flex-wrap p-5">
+                {recipes.length > 0 ? (
+                    recipes.map((r) => <Card key={r.id} recipe={r} />)
+                ) : (
+                    <h1 className="w-full text-green-600 text-3xl font-extrabold text-center mt-10">
+                        No Recipe Found
+                    </h1>
+                )}
+            </div>
+            {pathname === "/recipes" && (
+                <Link
+                    to="/create-recipe"
+                    className="cursor-pointer rounded-md absolute top-[15%] py-2 px-5 left-[10%]  bg-green-200 gap-x-3 flex items-center"
+                >
+                    <i className="text-3xl text-green-600 ri-add-box-line"></i>
+                    Create Recipe
+                </Link>
+            )}
+        </div>
+    );
+};
 
-export default Recipe
+export default Recipe;
