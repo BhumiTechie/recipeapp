@@ -3,12 +3,17 @@ import { NavLink } from 'react-router-dom';
 
 const Nav = () => {
   const [navVisible, setNavVisible] = useState(false);
+  <nav className="flex gap-5">
+    <NavLink className={(e) => (e.isActive ? "text-white" : "")} to="/">Home</NavLink>
+    <NavLink className={(e) => (e.isActive ? "text-white" : "")} to="/recipe">Recipe</NavLink>
+    <NavLink className={(e) => (e.isActive ? "text-white" : "")} to="/create">Create</NavLink>
+  </nav>
 
-  useEffect(() => {
-    setTimeout(() => {
-      setNavVisible(true);
-    }, 100);
-  }, []);
+useEffect(() => {
+  setTimeout(() => {
+    setNavVisible(true);
+  }, 100);
+}, []);
 
   return (
     <div>
