@@ -6,6 +6,8 @@ const Home = () => {
     const [titleVisible, setTitleVisible] = useState(false);
     const [textVisible, setTextVisible] = useState(false);
     const [buttonVisible, setButtonVisible] = useState(false);
+    const [sweetGreenVisible, setSweetGreenVisible] = useState(false);
+    const [foodMoodVisible, setFoodMoodVisible] = useState(false);
 
     useEffect(() => {
         setTimeout(() => {
@@ -17,6 +19,12 @@ const Home = () => {
         setTimeout(() => {
             setButtonVisible(true);
         }, 900);
+        setTimeout(() => {
+            setSweetGreenVisible(true);
+        }, 1100);
+        setTimeout(() => {
+            setFoodMoodVisible(true);
+        }, 1300);
     }, []);
 
     const images = [
@@ -45,10 +53,10 @@ const Home = () => {
     };
 
     return (
-        <div className='relative '>
+        <div className='relative bg-cyan-800 h-screen'>
             {renderImage()}
             <h1
-                className={`text-7xl tracking-wider text-center font-[Voyage] text-green-800 font-bold py-20 px-20 ${
+                className={`text-7xl  tracking-wider text-center font-[Voyage] text-white font-bold py-20 px-20 ${
                     titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[20px]'
                 } transition-all duration-500 ease-in-out`}
             >
@@ -56,11 +64,11 @@ const Home = () => {
                 Wealthy Food !!
             </h1>
             <p
-                className={`px-40 font-[gilroy font-semibold] ${
-                    textVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[20px]'
+                className={`px-40 font-[gilroy]  text-3xl ${
+                    textVisible ? 'opacity-100 translate-y-0' :'opacity-0 translate-y-[20px]'
                 } transition-all duration-500 ease-in-out`}
             >
-                The Foundational guide to balancing <br />
+                The Foundational guide to balancing 
                 Your Nutritional Diets and Everyday
                 <br />
                 Lifestyle
@@ -74,12 +82,19 @@ const Home = () => {
                     Get Started
                 </button>
             </Link>
-            <div className='absolute bottom-0 left-0 right-0 top-[150%] flex justify-center items-center h-screen bg-red-300'>
-                <h1 className='text-[150px]'>
-                    FAV
-                    <span className='absolute left-[60%] text-[300%] inline-block animate-spin-slow linear infinite'>O</span>
-                    URTIE
-                </h1>
+            <div className='absolute bottom-0 left-0 right-0 top-[150%] flex justify-center items-center '>
+            <div className="bg-white p-8 rounded-lg shadow-lg flex flex-col items-center justify-center">
+        <h1 className={`text-7xl text-gray-900 mb-4 ${
+            sweetGreenVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[20px]'
+        } transition-all duration-500 ease-in-out`}>
+            Sweet Green
+        </h1>
+        <h1 className={`text-7xl text-gray-900 ${
+            foodMoodVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-[20px]'
+        } transition-all duration-500 ease-in-out`}>
+            Food Mood
+        </h1>
+    </div>
             </div>
         </div>
     );
