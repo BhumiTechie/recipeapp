@@ -1,31 +1,70 @@
-import React from 'react';
+import {nanoid} from 'nanoid';
+import React, { useState } from 'react';
 
 const Create = () => {
+   const [image, setimage] = useState("");
+   const[title, settitle] = useState("");
+   const[description, setdescription] = useState("");
+   const [ingredients, setingredients] = useState("");
+   const[instructions , setinstructions] = useState("");
+
+
+   const SubmitHandler = (e) =>{
+      e.preventDefault();
+      const newRecipe = {
+        id : nanoid(),
+        image,
+        title,
+        description,
+        ingredients,
+        instructions
+      };
+      console.log(newRecipe);
+   }
+
   return (
-    <div className="min-h-screen flex justify-center items-center bg-stone-400">
-      <div className="w-1/2 h-1/2  bg-white rounded-lg shadow-lg p-8">
-        <h1 className="text-4xl font-bold text-center text-red-500 mb-8">Create New Recipe</h1>
-        <div className="mb-6">
-          <label htmlFor="recipeImage" className="block text-gray-700 font-semibold mb-2">Recipe Image URL:</label>
-          <input type="text" id="recipeImage" className="w-full rounded-md border-gray-300 px-4 py-3 focus:outline-none focus:border-red-500 placeholder-gray-400" placeholder="e.g., https://example.com/recipe.jpg" />
-        </div>
-        <div className="mb-6">
-          <label htmlFor="recipeName" className="block text-gray-700 font-semibold mb-2">Recipe Name:</label>
-          <input type="text" id="recipeName" className="w-full rounded-md border-gray-300 px-4 py-3 focus:outline-none focus:border-red-500 placeholder-gray-400" placeholder="Enter Recipe Name" />
-        </div>
-        <div className="mb-6">
-          <label htmlFor="recipeDescription" className="block text-gray-700 font-semibold mb-2">Recipe Description:</label>
-          <textarea id="recipeDescription" className="w-full rounded-md border-gray-300 px-4 py-3 focus:outline-none focus:border-red-500 placeholder-gray-400" rows="4" placeholder="Describe your recipe in a few words"></textarea>
-        </div>
-        <div className="mb-6">
-          <label htmlFor="recipeIngredients" className="block text-gray-700 font-semibold mb-2">Recipe Ingredients:</label>
-          <textarea id="recipeIngredients" className="w-full rounded-md border-gray-300 px-4 py-3 focus:outline-none focus:border-red-500 placeholder-gray-400" rows="4" placeholder="List the ingredients here, each on a separate line"></textarea>
-        </div>
-        <div className="flex justify-center">
-          <button className="bg-red-500 text-white font-semibold px-8 py-3 rounded-lg hover:bg-red-600 transition-colors duration-300 shadow-md hover:shadow-lg">Create Recipe</button>
-        </div>
-      </div>
-    </div>
+    <form onSubmit={SubmitHandler} className="w-[70%] m-auto  pb-5">
+            <h1 className="text-7xl mt-5 font-extrabold text-green-600 mb-[5%]">
+                Create <br /> New Recipe
+            </h1>
+            <input
+                onChange={(e) => setimage(e.target.value)}
+                value={image}
+                type="url"
+                className="w-full border rounded-md px-6 py-3 text-lg mb-5"
+                placeholder="Recipe Image URL"
+            />
+            <input
+                onChange={(e) => settitle(e.target.value)}
+                value={title}
+                type="text"
+                className="w-full border rounded-md px-6 py-3 text-lg mb-5"
+                placeholder="Recipe Name"
+            />
+            <textarea
+                onChange={(e) => setdescription(e.target.value)}
+                value={description}
+                className="w-full border rounded-md px-6 py-3 text-lg mb-5"
+                placeholder="recipe description..."
+            ></textarea>
+            <textarea
+                onChange={(e) => setingredients(e.target.value)}
+                value={ingredients}
+                className="w-full border rounded-md px-6 py-3 text-lg mb-5"
+                placeholder="recipe ingredients -> 'use comma to seperate ingredients'..."
+            ></textarea>
+            <textarea
+                onChange={(e) => setinstructions(e.target.value)}
+                value={instructions}
+                className="w-full border rounded-md px-6 py-3 text-lg mb-5"
+                placeholder="recipe instructions -> 'use comma to seperate instructions'..."
+            ></textarea>
+            <div className="w-full text-right">
+                <button className="rounded-md text-xl bg-green-600 text-white py-2 px-5 hover:bg-green-700 duration-200">
+                    Publish Recipe &nbsp; &#8594;
+                </button>
+            </div>
+        </form>
   );
 }
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
@@ -8,6 +8,9 @@ const Home = () => {
     const [buttonVisible, setButtonVisible] = useState(false);
     const [sweetGreenVisible, setSweetGreenVisible] = useState(false);
     const [foodMoodVisible, setFoodMoodVisible] = useState(false);
+
+    const sweetGreenRef = useRef(null);
+    const foodMoodRef = useRef(null);
 
     useEffect(() => {
         setTimeout(() => {
@@ -19,26 +22,39 @@ const Home = () => {
         setTimeout(() => {
             setButtonVisible(true);
         }, 900);
-        setTimeout(() => {
+    }, []);
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
             setSweetGreenVisible(true);
-        }, 1100);
-        setTimeout(() => {
             setFoodMoodVisible(true);
-        }, 1300);
+        }, 1000);
+
+        return () => clearTimeout(timeout);
+    }, []);
+    const handleScroll = () => {
+        if (sweetGreenRef.current && foodMoodRef.current) {
+            const sweetGreenTop = sweetGreenRef.current.getBoundingClientRect().top;
+            const foodMoodTop = foodMoodRef.current.getBoundingClientRect().top;
+            const windowHeight = window.innerHeight;
+            if (sweetGreenTop < windowHeight * 0.75) {
+                setSweetGreenVisible(true);
+            }
+            if (foodMoodTop < windowHeight * 0.75) {
+                setFoodMoodVisible(true);
+            }
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
     const images = [
         'https://images.unsplash.com/photo-1539136788836-5699e78bfc75?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         'https://i.pinimg.com/originals/a3/1f/8d/a31f8de21dbb5eb14e32a409cc525d68.gif',
     ];
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setImageIndex(prevIndex => (prevIndex === images.length - 1 ? 0 : prevIndex + 1));
-        }, 2000); 
-
-        return () => clearInterval(interval);
-    }, []);
 
     const renderImage = () => {
         return (
@@ -82,20 +98,33 @@ const Home = () => {
                     Get Started
                 </button>
             </Link>
-            <div className='absolute bottom-0 left-0 right-0 top-[150%] flex justify-center items-center '>
-            <div className="bg-white p-8 rounded-lg shadow-lg flex flex-col items-center justify-center">
-        <h1 className={`text-7xl text-gray-900 mb-4 ${
-            sweetGreenVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[20px]'
-        } transition-all duration-500 ease-in-out`}>
-            Sweet Green
-        </h1>
-        <h1 className={`text-7xl text-gray-900 ${
-            foodMoodVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-[20px]'
-        } transition-all duration-500 ease-in-out`}>
-            Food Mood
-        </h1>
+            <div className='relative h-screen flex flex-col justify-center items-center w-screen'>
+      <h1
+        ref={sweetGreenRef}
+        className={`absolute text-7xl  bg-teal-300  ${
+          sweetGreenVisible
+            ? 'opacity-100 translate-x-[-50%] -top-20'
+            : 'opacity-0 translate-x-[20px]'
+        } transition-all duration-500 ease-in-out left-1/2 transform -translate-x-1/2`}
+        style={{ top: '30%' }}
+      >
+        Sweet Green
+      </h1>
+      <img
+        className='absolute top-[58%] transform -translate-y-1/2 w-1/2 max-w-xs mx-auto'
+        src='https://i.gifer.com/1hsF.gif'
+        alt='Sweet Green GIF'
+      />
+      <h1
+        ref={foodMoodRef}
+        className={`absolute text-7xl rounded-full  bg-teal-300 px-7 ${
+          foodMoodVisible ? 'opacity-100 translate-x-[-50%] bottom-20' : 'opacity-0 translate-x-[20px]'
+        } transition-all duration-500 ease-in-out left-1/2 transform -translate-x-1/2`}
+        
+      >
+        Food Mood
+      </h1>
     </div>
-            </div>
         </div>
     );
 };
