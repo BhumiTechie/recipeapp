@@ -2,7 +2,6 @@ import Card from "./Card"
 import React, {useContext} from 'react'
 import {Link , useLocation} from "react-router-dom";
 
-import {Recipecontext} from "../context/Recipecontext"
 
 const Recipe = () => {
   const [recipe, setrecipes] = useContext(Recipecontext);

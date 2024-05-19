@@ -1,19 +1,17 @@
-import  { createContext, useEffect, useState } from 'react'
+import React, { createContext, useEffect, useState } from "react";
 
-export const Recipecontext = createContext(null)
+export const RecipeContext = createContext();
 
-const Recipecontext = (props) => {
-	const [recipe, setrecipes] = useState([]);
+export const RecipeProvider = (props) => {
+    const [recipes, setRecipes] = useState([]);
 
-    useEffect(()=>{
-		setrecipes(JSON.parse(localStorage.getItem("recipes"))|| []);
-	}, []);
+    useEffect(() => {
+        setRecipes(JSON.parse(localStorage.getItem("recipes")) || []);
+    }, []);
 
-   return (
-	  <Recipecontext.Provider value={[recipe, setrecipes]}>
+    return (
+        <RecipeContext.Provider value={[recipes, setRecipes]}>
             {props.children}
-	  </Recipecontext.Provider>
-  )
-}
-
-export default Recipecontext
+        </RecipeContext.Provider>
+    );
+};
