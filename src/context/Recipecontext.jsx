@@ -1,9 +1,8 @@
 import React, { createContext, useContext, useState } from 'react';
 
-// Create a context
+
 const RecipeContext = createContext();
 
-// Create a provider component
 export const RecipeProvider = ({ children }) => {
   const [recipes, setRecipes] = useState(
     JSON.parse(localStorage.getItem('recipes')) || []
@@ -22,7 +21,7 @@ export const RecipeProvider = ({ children }) => {
   );
 };
 
-// Custom hook to use the RecipeContext
+
 export const useRecipeContext = () => {
   return useContext(RecipeContext);
 };

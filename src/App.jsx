@@ -9,8 +9,9 @@ import Details from './Components/Details';
 import Update from './Components/Update';
 import Layout from './Components/Layout';
 import Contact from './Components/Contact';
-
 import { store } from './store/store';
+import { Provider } from 'react-redux';
+
 
 
 
