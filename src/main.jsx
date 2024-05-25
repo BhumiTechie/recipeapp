@@ -7,15 +7,12 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
 import { store } from "./store/store.jsx";
-import { RecipeProvider } from "."
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <BrowserRouter>
-    <Provider store={store}>
-      <RecipeProvider>
-        <App />
-        <ToastContainer />
-      </RecipeProvider>
-    </Provider>
-  </BrowserRouter>
+    <BrowserRouter>
+        <Provider store={store}>
+            <App />
+            <ToastContainer />
+        </Provider>
+    </BrowserRouter>
 );

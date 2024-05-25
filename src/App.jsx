@@ -1,36 +1,37 @@
-import React from 'react';
-import Nav from './Components/Nav';
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
-import RouteComponent from '../Routes/RouteComponent';
-import Home from './Components/Home';
-import Recipe from './Components/Recipe';
-import Create from './Components/Create';
-import Details from './Components/Details';
-import Update from './Components/Update';
-import Layout from './Components/Layout';
-import Contact from './Components/Contact';
-import { store } from './store/store';
-import { Provider } from 'react-redux';
-
-
-
+import { Component } from "react";
+import Nav from "./Components/Nav";
+import Layout from './Components/Layout'
+import Recipe from "./Components/Recipe";
+import Details from "./Components/Details";
+import Create from "./Components/Create";
+import Update from "./Components/Update";
+import Contact from "./Components/Contact";
+import { useDispatch } from "react-redux";
+import { asyncgetrecipe } from "./Actions/recipeAction";
 
 const App = () => {
-  return (
-    <div>
-      <Nav />
-      <RouteComponent/>
-      
-      <Routes>
-                <Route path="/layout" element={<Layout />} />
-                <Route path="/create-recipe" element={<Create />} />
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(asyncgetrecipe());
+    }, []);
+
+    return (
+        <div className="w-[80%] m-auto ">
+            <Nav />
+
+            <Routes>
+                <Route path="/" element={<Layout />} />
+                <Route path="/create" element={<Create />} />
                 <Route path="/update-recipe/:id" element={<Update />} />
-                <Route path="/recipes" element={<Recipe />} />
-                <Route path="/recipes/:id" element={<Details />} />
+                <Route path="/recipe" element={<Recipe />} />
+                <Route path="/recipe/:id" element={<Details />} />
                 <Route path="/contact" element={<Contact />} />
             </Routes>
-    </div>
-  );
-}
+        </div>
+    );
+};
 
 export default App;

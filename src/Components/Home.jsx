@@ -95,9 +95,12 @@ const Home = () => {
                         buttonVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[20px]'
                     } transition-all duration-500 ease-in-out`}
                 >
-                    Get Started
+                    Get Started 
+                    
                 </button>
+                
             </Link>
+            
             <div className='relative h-screen flex flex-col justify-center items-center w-screen'>
       <h1
         ref={sweetGreenRef}
