@@ -7,7 +7,6 @@ const Layout = () => {
         <>
             <Home />
             <Recipe />
-          
         </>
     );
 };

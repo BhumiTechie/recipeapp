@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { asyncgetrecipe } from '../Actions/recipeAction';
+import { asyncgetrecipies } from '../Actions/recipeAction';
 
 const Create = () => {
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ const Create = () => {
           "recipes",
           JSON.stringify([...recipes, newRecipe])
       );
-      dispatch(asyncgetrecipe());
+      dispatch(asyncgetrecipies());
       toast.success("Recipe Created Successfully!");
       navigate("/recipes");
   };

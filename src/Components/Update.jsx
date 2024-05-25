@@ -1,22 +1,27 @@
-import { useContext, useState } from "react";
+// Update.jsx
 
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { asyncgetrecipies } from "../Actions/recipeAction"; // Correct import statement
 
 const Update = () => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const params = useParams();
-    const [recipes, setrecipes] = useContext(Recipecontext);
+    const { recipes } = useSelector((state) => state.recipeReducer);
     const recipe = recipes && recipes.find((r) => r.id == params.id);
 
-    const [image, setimage] = useState(recipe.image);
-    const [title, settitle] = useState(recipe.title);
-    const [description, setdescription] = useState(recipe.description);
-    const [ingredients, setingredients] = useState(recipe.ingredients);
-    const [instructions, setinstructions] = useState(recipe.instructions);
+    const [image, setImage] = useState(recipe?.image || "");
+    const [title, setTitle] = useState(recipe?.title || "");
+    const [description, setDescription] = useState(recipe?.description || "");
+    const [ingredients, setIngredients] = useState(recipe?.ingredients || "");
+    const [instructions, setInstructions] = useState(recipe?.instructions || "");
 
-    const UpdateHandler = (e) => {
+    const UpdateHandler = async (e) => {
         e.preventDefault();
+
         const updatedRecipe = {
             id: recipe.id,
             title,
@@ -25,55 +30,69 @@ const Update = () => {
             ingredients,
             instructions,
         };
-        const copyRecipe = [...recipes];
-        const recipeIndex = recipes.findIndex((r) => r.id == params.id);
-        copyRecipe[recipeIndex] = updatedRecipe;
-        setrecipes(updatedRecipe);
 
-        localStorage.setItem("recipes", JSON.stringify(copyRecipe));
-        toast.success("Recipe Updated Successfully!");
-        navigate("/recipes");
+        try {
+            const copyRecipe = [...recipes];
+            const recipeIndex = recipes.findIndex((r) => r.id == params.id);
+            copyRecipe[recipeIndex] = updatedRecipe;
+
+            localStorage.setItem("recipes", JSON.stringify(copyRecipe));
+            await dispatch(asyncgetrecipies());
+            toast.success("Recipe Updated Successfully!");
+            navigate("/recipe");
+        } catch (error) {
+            console.error("Error updating recipe:", error);
+            toast.error("Failed to update recipe.");
+        }
     };
 
     return recipe ? (
-        <form onSubmit={UpdateHandler} className="w-[70%] m-auto  ">
+        <form onSubmit={UpdateHandler} className="w-[70%] m-auto">
             <h1 className="text-7xl mt-5 font-extrabold text-green-600 mb-[5%]">
                 Update <br /> Existing Recipe
             </h1>
             <input
-                onChange={(e) => setimage(e.target.value)}
+                onChange={(e) => setImage(e.target.value)}
                 value={image}
                 type="url"
                 className="w-full border rounded-md px-6 py-3 text-lg mb-5"
                 placeholder="Recipe Image URL"
+                required
             />
             <input
-                onChange={(e) => settitle(e.target.value)}
+                onChange={(e) => setTitle(e.target.value)}
                 value={title}
                 type="text"
                 className="w-full border rounded-md px-6 py-3 text-lg mb-5"
                 placeholder="Recipe Name"
+                required
             />
             <textarea
-                onChange={(e) => setdescription(e.target.value)}
+                onChange={(e) => setDescription(e.target.value)}
                 value={description}
                 className="w-full border rounded-md px-6 py-3 text-lg mb-5"
-                placeholder="recipe description..."
+                placeholder="Recipe Description..."
+                required
             ></textarea>
             <textarea
-                onChange={(e) => setingredients(e.target.value)}
+                onChange={(e) => setIngredients(e.target.value)}
                 value={ingredients}
                 className="w-full border rounded-md px-6 py-3 text-lg mb-5"
-                placeholder="recipe ingredients -> 'use comma to seperate ingredients'..."
+                placeholder="Recipe Ingredients (comma separated)..."
+                required
             ></textarea>
             <textarea
-                onChange={(e) => setinstructions(e.target.value)}
+                onChange={(e) => setInstructions(e.target.value)}
                 value={instructions}
                 className="w-full border rounded-md px-6 py-3 text-lg mb-5"
-                placeholder="recipe instructions -> 'use comma to seperate instructions'..."
+                placeholder="Recipe Instructions (comma separated)..."
+                required
             ></textarea>
             <div className="w-full text-right">
-                <button className="rounded-md text-xl bg-green-600 text-white py-2 px-5 hover:bg-green-700 duration-200">
+                <button
+                    type="submit"
+                    className="rounded-md text-xl bg-green-600 text-white py-2 px-5 hover:bg-green-700 duration-200"
+                >
                     Re-Publish Recipe &nbsp; &#8594;
                 </button>
             </div>
